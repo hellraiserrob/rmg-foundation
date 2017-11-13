@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatListModule } from '@angular/material';
@@ -11,6 +12,8 @@ import { AppComponent } from './app.component';
 import { FeaturesComponent } from './features/features.component';
 import { LandingComponent } from './landing/landing.component';
 import { NoMatch } from './no-match/no-match.component';
+
+import { FeatureService } from './features/feature.service'
 
 
 const appRoutes: Routes = [
@@ -38,9 +41,10 @@ const appRoutes: Routes = [
         MatToolbarModule,
         MatIconModule,
         MatListModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        HttpClientModule
     ],
-    providers: [],
+    providers: [FeatureService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

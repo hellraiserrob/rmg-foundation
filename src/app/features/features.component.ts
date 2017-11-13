@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Feature } from './feature'
+import { FeatureService } from './feature.service'
 
 @Component({
     selector: 'features',
@@ -9,19 +10,39 @@ import { Feature } from './feature'
 })
 export class FeaturesComponent implements OnInit {
 
-    title: string = 'List';
+    title: string = 'Features';
 
-    features: Feature[] = [
-        new Feature('One', false),
-        new Feature('Two', true)
-    ];
+    features: Feature[]
+
+
+    // features: Feature[] = [
+    //     new Feature('One', false),
+    //     new Feature('Two', true)
+    // ];
+
+    constructor(private featureService: FeatureService) {
+
+    }
 
     ngOnInit(): void {
-        this.test('Rob')
+        // this.test('Rob')
+
+        this.getFeatures()
     }
 
-    private test(name: string): void {
-        console.log(`hello ${name}`)
+    getFeatures(): void {
+
+        this.featureService.getFeatures()
+            .subscribe(features => {
+                this.features = features['data']
+            }, err => {
+                console.log('there was an error');
+            })
+
     }
+
+    // private test(name: string): void {
+    //     console.log(`hello ${name}`)
+    // }
 
 }

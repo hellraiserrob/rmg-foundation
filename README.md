@@ -6,21 +6,31 @@
     - module loader
     - typescript transpiler
     - linter
+
 - build workflow
-- angular
-- routing
-- service
-- openlayers
+
 - angular (https://angular.io/)
-- open layers (http://openlayers.org/)
-- turf js (http://turfjs.org/)
-- proj4 (http://proj4.org/)
 - angular material (https://material.angular.io/)
     - Possible prime ng (https://www.primefaces.org/primeng/#/)
+- routing
 - sass
+- services / observables
+- open layers (http://openlayers.org/)
+    - so look for alternatives (not for sv) 
+- turf js (http://turfjs.org/)
+- proj4 (http://proj4.org/)
 - unit test
 - e2e test
-- internationalisation
+
+- internationalisation?
+    support this
+
+- fds data services 
+    - look into the ui 
+    - code in bitbucket
+    
+
+- open street maps
 
 
 # RmgFoundationTest
