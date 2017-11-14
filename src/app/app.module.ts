@@ -2,15 +2,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule }   from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatListModule } from '@angular/material';
 
 
 import { AppComponent } from './app.component';
 
 import { FeaturesComponent } from './features/features.component';
 import { LandingComponent } from './landing/landing.component';
+import { MapsComponent } from './maps/maps.component';
 import { NoMatch } from './no-match/no-match.component';
 
 import { FeatureService } from './features/feature.service'
@@ -19,6 +21,7 @@ import { FeatureService } from './features/feature.service'
 const appRoutes: Routes = [
     { path: 'landing', component: LandingComponent },
     { path: 'features', component: FeaturesComponent },
+    { path: 'maps', component: MapsComponent },
     { path: '', redirectTo: '/landing', pathMatch: 'full' },
     { path: '**', component: NoMatch },
 ];
@@ -28,6 +31,7 @@ const appRoutes: Routes = [
         AppComponent,
         LandingComponent,
         FeaturesComponent,
+        MapsComponent,
         NoMatch,
     ],
     imports: [
@@ -36,13 +40,15 @@ const appRoutes: Routes = [
             appRoutes,
             { enableTracing: true } // <-- debugging purposes only
         ),
+        MatInputModule,
         MatButtonModule,
         MatCheckboxModule,
         MatToolbarModule,
         MatIconModule,
         MatListModule,
         BrowserAnimationsModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule
     ],
     providers: [FeatureService],
     bootstrap: [AppComponent]

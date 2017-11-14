@@ -1,0 +1,74 @@
+
+* {
+    box-sizing: border-box;
+    font-family: "Roboto";
+}
+
+.spacer {
+    // This fills the remaining space, by using flexbox. 
+    // Every toolbar row uses a flexbox row layout.
+    flex: 1 1 auto;
+}
+
+.map {
+    // height: 500px;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index: -1;
+
+    &.editing {
+        // border: 10px solid red;
+    }
+}
+
+
+.alert {
+    position: absolute;
+    bottom: 20px;
+    left:50%;
+    // width: 300px;
+    background: #000;
+    color: #fff;
+
+    font-size: 14px;
+
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 2px;
+    
+
+}
+
+
+.layers {
+    position: absolute;
+    bottom: 0;
+    right:0;
+    width: 300px;
+    background: #fff;
+    // border-top: 1px solid #ddd;
+    // border-left: 1px solid #ddd;
+    padding: 20px;
+
+    
+
+    ul {
+        margin:0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            padding: 0 0 10px 0;
+            margin: 0 0 10px 0;
+            border-bottom: 1px solid #ddd; 
+        }
+    }
+}
+
+
+.active {
+    background: #ddd;
+}
