@@ -15,7 +15,7 @@ export class MapsComponent implements OnInit {
     layers: Layer[] = [];
     newLayerTitle: string = '';
     method: string = 'marker';
-    selectedLayer: number = 0;
+    selectedLayer: number = -1;
 
 
     isEditing: boolean = false;
@@ -52,9 +52,9 @@ export class MapsComponent implements OnInit {
         }
 
         if (event.key === 'Escape') {
-              this.clearTemp()
-              this.isEditing = false
-              this.temp.length = 0
+            this.clearTemp()
+            this.isEditing = false
+            this.temp.length = 0
 
         }
 
@@ -74,35 +74,37 @@ export class MapsComponent implements OnInit {
 
         this.tempGroup = layerGroup().addTo(this.map)
 
-        this.layers.push({
-            name: 'Test Group 1',
-            group: layerGroup().addTo(this.map)
-        })
+        // this.layers.push({
+        //     name: 'Test Group 1',
+        //     group: layerGroup().addTo(this.map)
+        // })
 
         this.map.on('click', (e) => {
 
-            // console.log(`$method: ${this.method}`)
+            if (this.selectedLayer !== -1){
 
-            switch (this.method) {
+                switch (this.method) {
 
-                case 'marker':
-                    this.addMarker(e);
-                    break;
+                    case 'marker':
+                        this.addMarker(e);
+                        break;
 
-                case 'polyline':
-                    this.isEditing = true
-                    this.addTemp(e)
-                    this.addTempPolyline()
-                    break
+                    case 'polyline':
+                        this.isEditing = true
+                        this.addTemp(e)
+                        this.addTempPolyline()
+                        break
 
-                case 'polygon':
-                    this.isEditing = true
-                    this.addTemp(e);
-                    this.addTempPolygon()
-                    break;
+                    case 'polygon':
+                        this.isEditing = true
+                        this.addTemp(e);
+                        this.addTempPolygon()
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+
+                }
 
             }
         });
@@ -138,7 +140,7 @@ export class MapsComponent implements OnInit {
             this.temp
         ]
 
-        polyline(latlngs, { color: 'blue' }).addTo(this.tempGroup)
+        polyline(latlngs, { color: '#e74c3c' }).addTo(this.tempGroup)
 
     }
 
@@ -151,15 +153,15 @@ export class MapsComponent implements OnInit {
             this.temp
         ]
 
-        polygon(latlngs, { color: 'blue' }).addTo(this.tempGroup);
+        polygon(latlngs, { color: '#e74c3c' }).addTo(this.tempGroup);
 
     }
-    
+
     addTempMarkers() {
 
         let myIcon = icon({
             iconUrl: '/assets/maps/marker-editing.png',
-            iconAnchor: [4.5, 4.5],
+            iconAnchor: [5.5, 5.5],
         });
 
         this.temp.forEach((point) => {
@@ -183,7 +185,7 @@ export class MapsComponent implements OnInit {
 
         let myIcon = icon({
             iconUrl: '/assets/maps/marker.png',
-            iconAnchor: [4.5, 4.5],
+            iconAnchor: [10, 31],
         });
 
         marker([e.latlng.lat, e.latlng.lng], { icon: myIcon }).addTo(this.layers[this.selectedLayer].group);
@@ -206,7 +208,9 @@ export class MapsComponent implements OnInit {
             this.temp
         ]
 
-        polygon(latlngs, { color: '#3f51b5' }).addTo(this.layers[this.selectedLayer].group);
+        polygon(latlngs, { color: '#3f51b5', bubblingMouseEvents: false }).on('click', (e) => {
+            e.target.remove()
+        }).addTo(this.layers[this.selectedLayer].group)
 
     }
 
@@ -214,19 +218,26 @@ export class MapsComponent implements OnInit {
 
     /* layers aka: groups */
 
-    addLayer(): void {
+    addLayer(event): void {
 
-        this.layers.push({
-            name: this.newLayerTitle,
-            group: layerGroup().addTo(this.map)
-        })
+        if (event.keyCode === 13 && this.newLayerTitle.length > 0) {
 
-        this.newLayerTitle = ''
+            this.layers.push({
+                name: this.newLayerTitle,
+                group: layerGroup().addTo(this.map),
+                isVisible: true
+            })
+
+            this.newLayerTitle = ''
+            this.selectLayer(this.layers.length - 1)
+
+        }
 
     }
 
     removeLayer(layer: Layer): void {
         this.layers.splice(this.layers.indexOf(layer), 1);
+        this.selectLayer(-1)
     }
 
     selectLayer(index: number): void {
@@ -237,12 +248,41 @@ export class MapsComponent implements OnInit {
         this.layers[index].group.clearLayers()
     }
 
+    toggleLayerVisiblity(layer: Layer):void{
+        layer.isVisible = !layer.isVisible
+
+        
+        
+        
+        layer.group.eachLayer((l) => {
+            
+            let opacity = layer.isVisible ? 1 : 0
+            
+            if(typeof l.setIcon !== 'undefined'){
+                
+                l.setOpacity(opacity)
+            }
+            else {
+                
+                l.setStyle({
+                    opacity,
+                    fillOpacity: opacity / 5
+                })
+
+            }
+            
+            
+            
+        })
+    }
+
     clear(): void {
         this.layers.forEach((layer: Layer) => {
             layer.group.clearLayers()
         })
 
         this.layers.length = 0
+        this.selectLayer(-1)
     }
 
 }

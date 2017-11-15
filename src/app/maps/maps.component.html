@@ -2,37 +2,54 @@
     <span>Map View</span>
     <span class="spacer"></span>
     <!-- <button mat-button><mat-icon>more_horiz</mat-icon>  </button> -->
-    <button mat-button (click)="setMethod('marker')" [class.active]="method === 'marker'">Marker</button>
-    <button mat-button (click)="setMethod('polyline')" [class.active]="method === 'polyline'">Polyline</button>
-    <button mat-button (click)="setMethod('polygon')" [class.active]="method === 'polygon'">Polygon</button>
-    <button mat-button (click)="clear()">Clear</button>
+    <button mat-button (click)="setMethod('marker')" [class.active]="method === 'marker'" [disabled]="selectedLayer === -1">Marker</button>
+    <button mat-button (click)="setMethod('polyline')" [class.active]="method === 'polyline'" [disabled]="selectedLayer === -1">Polyline</button>
+    <button mat-button (click)="setMethod('polygon')" [class.active]="method === 'polygon'" [disabled]="selectedLayer === -1">Polygon</button>
+    <button mat-button (click)="clear()" [disabled]="!layers.length">Clear</button>
 </mat-toolbar>
 
 <div class="layers">
 
-    <ul>
-        <li *ngFor="let layer of layers; let i = index" [class.active]="i === selectedLayer" (click)="selectLayer(i)">
-            
-            {{layer.name}}
-            <div>
-                <a (click)="removeLayer(layer)">delete</a> | 
-                <a (click)="clearLayer(i)">clear</a>
-            </div>
-        </li>
-    </ul>
+    <mat-toolbar color="primary">
+        <span>Layers</span>
+    </mat-toolbar>
 
-    <div>
+    <mat-list>
+        <mat-list-item *ngFor="let layer of layers; let i = index" (click)="selectLayer(i)" [class.active]="i === selectedLayer">
 
-        <input type="text" [(ngModel)]="newLayerTitle" name="name" placeholder="Layer Name" />
+            <h3 matLine>{{layer.name}}</h3>
 
-    </div>
+            <button mat-icon-button (click)="toggleLayerVisiblity(layer)">
+                <mat-icon *ngIf="layer.isVisible">visibility</mat-icon>
+                <mat-icon *ngIf="!layer.isVisible">visibility_off</mat-icon>
+            </button>
 
-    <div>
+            <button mat-icon-button (click)="clearLayer(i)">
+                <mat-icon>clear</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="removeLayer(layer)">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+        </mat-list-item>
+    </mat-list>
+
+    <form (keydown)="addLayer($event)" class="p20">
+
+        <mat-form-field class="example-full-width">
+            <input matInput type="text" [(ngModel)]="newLayerTitle" name="name" placeholder="Layer Name" />
+            <mat-hint align="end">Hit enter to add</mat-hint>
+        </mat-form-field>
+
+    </form>
+
+    <!-- <div>
         <button mat-button (click)="addLayer()" color="primary">Add</button>
-    </div>
+    </div> -->
 
 </div>
 
-<div class="map" id="map" [class.editing]="isEditing"></div>
+<div class="map" id="map" [class.editing]="isEditing" [class.active]="selectedLayer !== -1"></div>
 
-<div class="alert" *ngIf="isEditing">You're in editing mode</div>
+<div class="alert" *ngIf="isEditing">Editing mode: Enter to finish, Esc to cancel</div>
