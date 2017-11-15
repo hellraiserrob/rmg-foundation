@@ -1,41 +1,21 @@
-# RmgFoundation
+# RMG Foundation
 
-##aims
+demo: https://hellraiserrob.github.io/rmg-foundation/
 
-- Development workflow
+## Aims
+
+- development workflow
     - module loader
     - typescript transpiler
     - linter
-
 - build workflow
-
 - angular (https://angular.io/)
 - angular material (https://material.angular.io/)
-    - Possible prime ng (https://www.primefaces.org/primeng/#/)
 - routing
 - sass
 - services / observables
-- open layers (http://openlayers.org/)
-    - so look for alternatives (not for sv) 
-- turf js (http://turfjs.org/)
-- proj4 (http://proj4.org/)
-- unit test
-- e2e test
+- leafletjs 
 
-- internationalisation?
-    support this
-
-- fds data services 
-    - look into the ui 
-    - code in bitbucket
-    
-
-- open street maps
-
-
-# RmgFoundationTest
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
 ## Development server
 
@@ -56,7 +36,3 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

@@ -4,6 +4,9 @@ import { Map, tileLayer, marker, markerClusterGroup, layerGroup, icon, polyline,
 import { Layer } from './layer'
 import { LatLng } from './latlng'
 
+// import { MarkerImage } from '../../assets/maps/marker.png'
+// import { MarkerImageEditing } from './images/marker-editing.png'
+
 @Component({
     selector: 'maps',
     templateUrl: './maps.component.html',
@@ -160,7 +163,7 @@ export class MapsComponent implements OnInit {
     addTempMarkers() {
 
         let myIcon = icon({
-            iconUrl: '/assets/maps/marker-editing.png',
+            iconUrl: 'assets/maps/marker-editing.png',
             iconAnchor: [5.5, 5.5],
         });
 
@@ -181,10 +184,10 @@ export class MapsComponent implements OnInit {
 
     addMarker(e) {
 
-        console.log(e.latlng)
+        // console.log(e.latlng)
 
         let myIcon = icon({
-            iconUrl: '/assets/maps/marker.png',
+            iconUrl: 'assets/maps/marker.png',
             iconAnchor: [10, 31],
         });
 

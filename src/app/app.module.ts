@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule }   from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatInputModule, MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatListModule, MatTooltipModule } from '@angular/material';
 
 
 import { AppComponent } from './app.component';
@@ -22,7 +22,7 @@ const appRoutes: Routes = [
     { path: 'landing', component: LandingComponent },
     { path: 'features', component: FeaturesComponent },
     { path: 'maps', component: MapsComponent },
-    { path: '', redirectTo: '/landing', pathMatch: 'full' },
+    { path: '', redirectTo: '/maps', pathMatch: 'full' },
     { path: '**', component: NoMatch },
 ];
 
@@ -48,7 +48,8 @@ const appRoutes: Routes = [
         MatListModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        MatTooltipModule
     ],
     providers: [FeatureService],
     bootstrap: [AppComponent]

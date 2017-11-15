@@ -19,23 +19,23 @@
 
             <h3 matLine>{{layer.name}}</h3>
 
-            <button mat-icon-button (click)="toggleLayerVisiblity(layer)">
+            <button mat-icon-button (click)="toggleLayerVisiblity(layer)"  matTooltip="Toggle layer visibility" matTooltipPosition="above">
                 <mat-icon *ngIf="layer.isVisible">visibility</mat-icon>
                 <mat-icon *ngIf="!layer.isVisible">visibility_off</mat-icon>
             </button>
 
-            <button mat-icon-button (click)="clearLayer(i)">
+            <button mat-icon-button (click)="clearLayer(i)" matTooltip="Clear layer" matTooltipPosition="above">
                 <mat-icon>clear</mat-icon>
             </button>
 
-            <button mat-icon-button (click)="removeLayer(layer)">
+            <button mat-icon-button (click)="removeLayer(layer)" matTooltip="Delete layer" matTooltipPosition="above">
                 <mat-icon>delete</mat-icon>
             </button>
 
         </mat-list-item>
     </mat-list>
 
-    <form (keydown)="addLayer($event)" class="p20">
+    <form (keydown)="addLayer($event)" class="p20" >
 
         <mat-form-field class="example-full-width">
             <input matInput type="text" [(ngModel)]="newLayerTitle" name="name" placeholder="Layer Name" />
