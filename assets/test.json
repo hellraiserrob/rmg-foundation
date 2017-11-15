@@ -1,0 +1,12 @@
+{
+    "data": [{
+        "name": "angular",
+        "isChecked": true
+    }, {
+        "name": "routing",
+        "isChecked": false
+    }, {
+        "name": "language",
+        "isChecked": false
+    }]
+}
