@@ -1,20 +1,17 @@
 # RMG Foundation
 
-demo: https://hellraiserrob.github.io/rmg-foundation/
+A seed project https://hellraiserrob.github.io/rmg-foundation/
 
-## Aims
+## Features
 
 - development workflow
-    - module loader
-    - typescript transpiler
-    - linter
 - build workflow
 - angular (https://angular.io/)
 - angular material (https://material.angular.io/)
 - routing
 - sass
 - services / observables
-- leafletjs 
+- leafletjs with mapbox 
 
 
 ## Development server
