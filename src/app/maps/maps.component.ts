@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Inject } from '@angular/core';
 import { Map, tileLayer, marker, markerClusterGroup, layerGroup, icon, polyline, polygon } from 'leaflet';
 
 import { Layer } from './layer'
@@ -6,6 +6,10 @@ import { LatLng } from './latlng'
 
 // import { MarkerImage } from '../../assets/maps/marker.png'
 // import { MarkerImageEditing } from './images/marker-editing.png'
+
+import { MatDialog } from '@angular/material';
+
+import { DialogOverviewExampleDialog } from '../dialog/dialog.component'
 
 @Component({
     selector: 'maps',
@@ -24,6 +28,10 @@ export class MapsComponent implements OnInit {
     isEditing: boolean = false;
     temp: LatLng[] = []
     tempGroup: any;
+
+    layersIsvisible: boolean = true
+
+    constructor(public dialog: MatDialog) { }
 
     @HostListener('window:keyup', ['$event'])
 
@@ -84,7 +92,7 @@ export class MapsComponent implements OnInit {
 
         this.map.on('click', (e) => {
 
-            if (this.selectedLayer !== -1){
+            if (this.selectedLayer !== -1) {
 
                 switch (this.method) {
 
@@ -238,44 +246,52 @@ export class MapsComponent implements OnInit {
 
     }
 
-    removeLayer(layer: Layer): void {
-        this.layers.splice(this.layers.indexOf(layer), 1);
-        this.selectLayer(-1)
+    removeLayer(layer: Layer, index: number): void {
+
+        const cb = (layers, layer) => {
+            this.layers.splice(this.layers.indexOf(layer), 1);
+            this.selectLayer(-1)
+        }
+
+        this.clearLayer(index, cb, layer)
+
     }
 
     selectLayer(index: number): void {
         this.selectedLayer = index;
     }
 
-    clearLayer(index: number): void {
+    clearLayer(index: number, cb: any, layer: Layer): void {
         this.layers[index].group.clearLayers()
+
+        if(typeof cb !== 'undefined'){
+            cb(this.layers, layer)
+        }
     }
 
-    toggleLayerVisiblity(layer: Layer):void{
+    toggleLayerVisiblity(layer: Layer): void {
+
         layer.isVisible = !layer.isVisible
 
-        
-        
-        
         layer.group.eachLayer((l) => {
-            
+
             let opacity = layer.isVisible ? 1 : 0
-            
-            if(typeof l.setIcon !== 'undefined'){
-                
+
+            if (typeof l.setIcon !== 'undefined') {
+
                 l.setOpacity(opacity)
             }
             else {
-                
+
                 l.setStyle({
                     opacity,
                     fillOpacity: opacity / 5
                 })
 
             }
-            
-            
-            
+
+
+
         })
     }
 
@@ -287,5 +303,28 @@ export class MapsComponent implements OnInit {
         this.layers.length = 0
         this.selectLayer(-1)
     }
+
+
+    editLayer(): void {
+
+        console.log('edit')
+
+    }
+
+    /* dialog */
+
+    openDialog(layer: Layer): void {
+        let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+            width: '250px',
+            data: { layer }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+            
+        });
+    }
+
+
 
 }

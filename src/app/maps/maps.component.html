@@ -10,43 +10,63 @@
 
 <div class="layers">
 
+
+
     <mat-toolbar color="primary">
         <span>Layers</span>
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="layersIsvisible = !layersIsvisible">
+            <mat-icon *ngIf="layersIsvisible">remove</mat-icon>
+            <mat-icon *ngIf="!layersIsvisible">add</mat-icon>
+        </button>
     </mat-toolbar>
 
-    <mat-list>
-        <mat-list-item *ngFor="let layer of layers; let i = index" (click)="selectLayer(i)" [class.active]="i === selectedLayer">
+    <div *ngIf="layersIsvisible">
 
-            <h3 matLine>{{layer.name}}</h3>
+        <mat-list>
+            <mat-list-item *ngFor="let layer of layers; let i = index" (click)="selectLayer(i)" [class.active]="i === selectedLayer"  matTooltip="Click to select layer" matTooltipPosition="left">
 
-            <button mat-icon-button (click)="toggleLayerVisiblity(layer)"  matTooltip="Toggle layer visibility" matTooltipPosition="above">
-                <mat-icon *ngIf="layer.isVisible">visibility</mat-icon>
-                <mat-icon *ngIf="!layer.isVisible">visibility_off</mat-icon>
-            </button>
+                <h3 matLine>{{layer.name}}</h3>
 
-            <button mat-icon-button (click)="clearLayer(i)" matTooltip="Clear layer" matTooltipPosition="above">
-                <mat-icon>clear</mat-icon>
-            </button>
+                <mat-menu #appMenu="matMenu">
+                    <button mat-menu-item (click)="toggleLayerVisiblity(layer)">Toggle layer visibility</button>
+                    <button mat-menu-item (click)="openDialog(layer)">Edit layer</button>
+                    <button mat-menu-item (click)="clearLayer(i)">Clear layer</button>
+                    <button mat-menu-item (click)="removeLayer(layer, i)">Delete layer</button>
+                </mat-menu>
 
-            <button mat-icon-button (click)="removeLayer(layer)" matTooltip="Delete layer" matTooltipPosition="above">
-                <mat-icon>delete</mat-icon>
-            </button>
 
-        </mat-list-item>
-    </mat-list>
+                <!-- <button mat-icon-button (click)="toggleLayerVisiblity(layer)" matTooltip="Toggle layer visibility" matTooltipPosition="above">
+                    <mat-icon *ngIf="layer.isVisible">visibility</mat-icon>
+                    <mat-icon *ngIf="!layer.isVisible">visibility_off</mat-icon>
+                </button>
 
-    <form (keydown)="addLayer($event)" class="p20" >
+                <button mat-icon-button (click)="openDialog(layer)" matTooltip="Edit layer" matTooltipPosition="above">
+                    <mat-icon>mode_edit</mat-icon>
+                </button> -->
 
-        <mat-form-field class="example-full-width">
-            <input matInput type="text" [(ngModel)]="newLayerTitle" name="name" placeholder="Layer Name" />
-            <mat-hint align="end">Hit enter to add</mat-hint>
-        </mat-form-field>
+                <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
 
-    </form>
+            </mat-list-item>
+        </mat-list>
 
-    <!-- <div>
+        <form (keydown)="addLayer($event)" class="p20">
+
+            <mat-form-field class="example-full-width">
+                <input matInput type="text" [(ngModel)]="newLayerTitle" name="name" placeholder="Layer Name" />
+                <mat-hint align="end">Hit enter to add</mat-hint>
+            </mat-form-field>
+
+        </form>
+
+        <!-- <div>
         <button mat-button (click)="addLayer()" color="primary">Add</button>
     </div> -->
+
+
+    </div>
 
 </div>
 
